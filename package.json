@@ -1,0 +1,46 @@
+{
+  "name": "bpmn-js-custom-elements-example",
+  "version": "0.0.0",
+  "description": "The example to end all examples",
+  "main": "app/index.js",
+  "scripts": {
+    "all": "grunt",
+    "dev": "grunt auto-build"
+  },
+  "keywords": [
+    "bpmn-js"
+  ],
+  "author": {
+    "name": "Philipp Fromme",
+    "url": "https://github.com/philippfromme"
+  },
+  "contributors": [
+    {
+      "name": "bpmn.io contributors",
+      "url": "https://github.com/bpmn-io"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
+    "bpmn-js": "^3.0.4",
+    "diagram-js": "^3.0.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "ids": "^0.2.2",
+    "inherits": "^2.0.3",
+    "load-grunt-tasks": "^3.5.0",
+    "min-dash": "^3.3.0",
+    "min-dom": "^3.1.1",
+    "stringify": "^3.1.0",
+    "tiny-svg": "^2.2.0"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}

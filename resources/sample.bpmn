@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:emojis="http://some-company/schema/bpmn/emoji" id="_RdgBELNaEeSYkoSLDs6j-w" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="Process_1">
+    <bpmn2:startEvent id="StartEvent_1b870qk">
+      <bpmn2:outgoing>SequenceFlow_0yrejga</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:task id="Task_0iowfdu" emojis:emoji="🤗">
+      <bpmn2:incoming>SequenceFlow_0yrejga</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1lzi13t</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_0yrejga" sourceRef="StartEvent_1b870qk" targetRef="Task_0iowfdu" />
+    <bpmn2:endEvent id="EndEvent_098qi11">
+      <bpmn2:incoming>SequenceFlow_1lzi13t</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1lzi13t" sourceRef="Task_0iowfdu" targetRef="EndEvent_098qi11" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="StartEvent_1b870qk_di" bpmnElement="StartEvent_1b870qk">
+        <dc:Bounds x="263" y="130" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0iowfdu_di" bpmnElement="Task_0iowfdu">
+        <dc:Bounds x="349" y="108" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0yrejga_di" bpmnElement="SequenceFlow_0yrejga">
+        <di:waypoint x="299" y="148" />
+        <di:waypoint x="349" y="148" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_098qi11_di" bpmnElement="EndEvent_098qi11">
+        <dc:Bounds x="499" y="130" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1lzi13t_di" bpmnElement="SequenceFlow_1lzi13t">
+        <di:waypoint x="449" y="148" />
+        <di:waypoint x="499" y="148" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

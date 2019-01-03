@@ -1,0 +1,23 @@
+{
+  "name": "Emojis",
+  "uri": "http://some-company/schema/bpmn/emoji",
+  "prefix": "emojis",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "EmojiTask",
+      "extends": [ "bpmn:Task" ],
+      "properties": [
+        {
+          "name": "emoji",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ],
+  "emumerations": [],
+  "associations": []
+}
