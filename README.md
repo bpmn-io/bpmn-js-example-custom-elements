@@ -2,7 +2,7 @@
 
 An example of how to add support for custom elements while ensuring BPMN 2.0 compatibility.
 
-![Screencast](./docs/screencast.gif)
+![Screencast](./resources/screencast.gif)
 
 ## About
 
