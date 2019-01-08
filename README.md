@@ -1,8 +1,8 @@
 # Custom Elements in bpmn-js
 
-An example of how to use a custom element while ensuring BPMN 2.0 compatibility.
+An example of how to add support for custom elements while ensuring BPMN 2.0 compatibility.
 
-![Screencast](./docs/screencast.gif) 
+![Screencast](./docs/screencast.gif)
 
 ## About
 
@@ -77,7 +77,6 @@ EmojiRenderer.prototype.canRender = function(element) {
 It also knows how to render them:
 
 ```javascript
-
 EmojiRenderer.prototype.drawShape = function(parentNode, element) {
   var businessObject = element.businessObject,
       emoji = businessObject.emoji;
@@ -113,37 +112,63 @@ The custom element can be created like any other element: using the palette or t
 The [palette](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
 
 ```javascript
+  ...,
 
-'create.emojiTask': {
-  group: 'activity',
-  className: 'icon-emoji',
-  title: translate('Create Emoji Task'),
-  action: {
-    dragstart: createEmojiTask,
-    click: createEmojiTask
-  }
-},
+  'create.emojiTask': {
+    group: 'activity',
+    className: 'icon-emoji',
+    title: translate('Create Emoji Task'),
+    action: {
+      dragstart: createEmojiTask,
+      click: createEmojiTask
+    }
+  },
+
+  ...
 ```
 
 The [context pad](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiContextPadProvider.js) contains an additional entry, too:
 
 ```javascript
-'append.append-emoji-task': {
-  group: 'model',
-  className: 'icon-emoji',
-  title: translate('Append Emoji Task'),
-  action: {
-    dragstart: appendEmojiTaskStart,
-    click: appendEmojiTask
-  }
-},
+{
+  ...
+
+  'append.append-emoji-task': {
+    group: 'model',
+    className: 'icon-emoji',
+    title: translate('Append Emoji Task'),
+    action: {
+      dragstart: appendEmojiTaskStart,
+      click: appendEmojiTask
+    }
+  },
+
+  ...
 ```
 
-## Run
 
+## Run the Example
+
+You need a [NodeJS](http://nodejs.org) development stack with [npm](https://npmjs.org) installed to build the project.
+
+To install all project dependencies execute
+
+```sh
+npm install
 ```
-npm i && npm run dev
+
+To start the example execute
+
+```sh
+npm start
 ```
+
+To build the example into the `public` folder execute
+
+```sh
+npm run all
+```
+
 
 ## License
 
