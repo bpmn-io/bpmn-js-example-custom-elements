@@ -4,11 +4,10 @@ An example of how to add support for custom elements while ensuring BPMN 2.0 com
 
 ![Screencast](./resources/screencast.gif)
 
-## About
 
-### Creating a Moddle Extension
+## Extending the BPMN Model
 
-The custom element is actually a task with a custom attribute that is defined in a [moddle extension](https://github.com/bpmn-io/moddle):
+The custom element is actually a task with a custom attribute. The custom attribute is defined as a [moddle extension](https://github.com/bpmn-io/moddle) in [`resources/emoji.json`](https://github.com/bpmn-io/bpmn-js-custom-elements-example/blob/master/resources/emoji.json):
 
 ```javascript
 {
@@ -32,7 +31,7 @@ The XML of the custom element looks like this:
 
 Still valid BPMN 2.0.
 
-For more complex extensions you can use extension elements. The emoji could also be an extension element:
+We could store more complex data inside the `<bpmn:extensionElements />` tag. To do this, we would define the emoji as an extension element:
 
 ```javascript
 {
@@ -58,7 +57,7 @@ The XML would look like this:
 </bpmn:task>
 ```
 
-### Rendering the Custom Element
+## Rendering the Custom Element
 
 In order to render the custom element an [additional renderer](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiRenderer.js) is used. It knows which elements to render:
 
@@ -105,7 +104,7 @@ EmojiRenderer.prototype.drawShape = function(parentNode, element) {
 };
 ```
 
-### Creating the Custom Element
+## Creating the Custom Element
 
 The custom element can be created like any other element: using the palette or the context pad. Therefore, both are overridden:
 
