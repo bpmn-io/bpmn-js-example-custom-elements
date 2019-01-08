@@ -5,9 +5,18 @@ An example of how to add support for custom elements while ensuring BPMN 2.0 com
 ![Screencast](./resources/screencast.gif)
 
 
+## About
+
+This example guides covers the following topics:
+
+* [Creating a BPMN model extension](#extending-the-bpmn-model)
+* [Rendering a custom element](#rendering-the-element)
+* [Extending the BPMN editor](#creating-editor-controls)
+
+
 ## Extending the BPMN Model
 
-The custom element is actually a task with a custom attribute. The custom attribute is defined as a [moddle extension](https://github.com/bpmn-io/moddle) in [`resources/emoji.json`](https://github.com/bpmn-io/bpmn-js-custom-elements-example/blob/master/resources/emoji.json):
+The custom element is actually a BPMN task with a custom attribute. The custom attribute is defined as a [moddle extension](https://github.com/bpmn-io/moddle) in [`resources/emoji.json`](https://github.com/bpmn-io/bpmn-js-custom-elements-example/blob/master/resources/emoji.json):
 
 ```javascript
 {
@@ -57,7 +66,7 @@ The XML would look like this:
 </bpmn:task>
 ```
 
-## Rendering the Custom Element
+## Rendering the Element
 
 In order to render the custom element an [additional renderer](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiRenderer.js) is used. It knows which elements to render:
 
@@ -104,9 +113,11 @@ EmojiRenderer.prototype.drawShape = function(parentNode, element) {
 };
 ```
 
-## Creating the Custom Element
+## Creating Editor Controls
 
-The custom element can be created like any other element: using the palette or the context pad. Therefore, both are overridden:
+The custom element can be created like any other element, either via the palette or via the context pad. We override both to add a custom create control.
+
+#### Palette 
 
 The [palette](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
 
@@ -125,6 +136,8 @@ The [palette](https://github.com/philippfromme/bpmn-js-custom-elements-example/b
 
   ...
 ```
+
+#### Context Pad
 
 The [context pad](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiContextPadProvider.js) contains an additional entry, too:
 
