@@ -2,7 +2,7 @@ import Modeler from 'bpmn-js/lib/Modeler';
 
 import sampleProcess from '../resources/sample.bpmn';
 
-import emojiPackage from '../resources/emoji';
+import emojiPackage from '../resources/emoji.json';
 
 import {
   EmojiContextPadProvider,
@@ -10,7 +10,7 @@ import {
   EmojiRenderer
 } from './modules';
 
-import { is, getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
+import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
 
 var HIGH_PRIORITY = 100000;
 
@@ -33,8 +33,7 @@ modeler.importXML(sampleProcess);
 
 window.modeler = modeler;
 
-var moddle = modeler.get('moddle'),
-    modeling = modeler.get('modeling');
+var modeling = modeler.get('modeling');
 
 var emojis = document.getElementById('emojis');
 
