@@ -1,6 +1,6 @@
 # Custom Elements in bpmn-js
 
-An example of how to support custom elements to [bpmn-js](https://github.com/bpmn-io/bpmn-js) while ensuring BPMN 2.0 compatibility.
+An example of how to support custom elements in [bpmn-js](https://github.com/bpmn-io/bpmn-js) while ensuring BPMN 2.0 compatibility.
 
 ![Screencast](./resources/screencast.gif)
 
