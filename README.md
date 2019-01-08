@@ -1,13 +1,15 @@
 # Custom Elements in bpmn-js
 
-An example of how to add support for custom elements while ensuring BPMN 2.0 compatibility.
+An example of how to support custom elements to [bpmn-js](https://github.com/bpmn-io/bpmn-js) while ensuring BPMN 2.0 compatibility.
 
 ![Screencast](./resources/screencast.gif)
+
+:notebook: We refer to _custom elements_ as elements with their own representation and data.
 
 
 ## About
 
-This example guides covers the following topics:
+This example covers the following topics:
 
 * [Creating a BPMN model extension](#extending-the-bpmn-model)
 * [Rendering a custom element](#rendering-the-element)
@@ -66,6 +68,7 @@ The XML would look like this:
 </bpmn:task>
 ```
 
+
 ## Rendering the Element
 
 In order to render the custom element an [additional renderer](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiRenderer.js) is used. It knows which elements to render:
@@ -112,6 +115,7 @@ EmojiRenderer.prototype.drawShape = function(parentNode, element) {
   return rect;
 };
 ```
+
 
 ## Creating Editor Controls
 
