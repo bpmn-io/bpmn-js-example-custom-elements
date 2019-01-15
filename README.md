@@ -71,7 +71,7 @@ The XML would look like this:
 
 ## Rendering the Element
 
-In order to render the custom element an [additional renderer](./app/modules/EmojiRenderer.js) is used. It knows which elements to render:
+In order to render the custom element an [additional renderer](./app/emoji/EmojiRenderer.js) is used. It knows which elements to render:
 
 ```javascript
 EmojiRenderer.prototype.canRender = function(element) {
@@ -123,7 +123,7 @@ The custom element can be created like any other element, either via the palette
 
 #### Palette
 
-The [palette](./app/modules/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
+The [palette](./app/emoji/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
 
 ```javascript
   ...,
@@ -143,7 +143,7 @@ The [palette](./app/modules/EmojiPaletteProvider.js) contains an additional entr
 
 #### Context Pad
 
-The [context pad](./app/modules/EmojiContextPadProvider.js) contains an additional entry, too:
+The [context pad](./app/emoji/EmojiContextPadProvider.js) contains an additional entry, too:
 
 ```javascript
 {

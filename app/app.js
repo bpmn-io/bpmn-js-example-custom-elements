@@ -8,7 +8,7 @@ import {
   EmojiContextPadProvider,
   EmojiPaletteProvider,
   EmojiRenderer
-} from './modules';
+} from './emoji';
 
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
 
