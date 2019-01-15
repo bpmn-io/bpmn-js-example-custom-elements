@@ -18,7 +18,7 @@ This example covers the following topics:
 
 ## Extending the BPMN Model
 
-The custom element is actually a BPMN task with a custom attribute. The custom attribute is defined as a [moddle extension](https://github.com/bpmn-io/moddle) in [`resources/emoji.json`](https://github.com/bpmn-io/bpmn-js-custom-elements-example/blob/master/resources/emoji.json):
+The custom element is actually a BPMN task with a custom attribute. The custom attribute is defined as a [moddle extension](https://github.com/bpmn-io/moddle) in [`resources/emoji.json`](./resources/emoji.json):
 
 ```javascript
 {
@@ -71,7 +71,7 @@ The XML would look like this:
 
 ## Rendering the Element
 
-In order to render the custom element an [additional renderer](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiRenderer.js) is used. It knows which elements to render:
+In order to render the custom element an [additional renderer](./app/modules/EmojiRenderer.js) is used. It knows which elements to render:
 
 ```javascript
 EmojiRenderer.prototype.canRender = function(element) {
@@ -121,9 +121,9 @@ EmojiRenderer.prototype.drawShape = function(parentNode, element) {
 
 The custom element can be created like any other element, either via the palette or via the context pad. We override both to add a custom create control.
 
-#### Palette 
+#### Palette
 
-The [palette](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
+The [palette](./app/modules/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
 
 ```javascript
   ...,
@@ -143,7 +143,7 @@ The [palette](https://github.com/philippfromme/bpmn-js-custom-elements-example/b
 
 #### Context Pad
 
-The [context pad](https://github.com/philippfromme/bpmn-js-custom-elements-example/blob/master/app/modules/EmojiContextPadProvider.js) contains an additional entry, too:
+The [context pad](./app/modules/EmojiContextPadProvider.js) contains an additional entry, too:
 
 ```javascript
 {
