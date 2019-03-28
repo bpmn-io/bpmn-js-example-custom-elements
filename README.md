@@ -2,166 +2,148 @@
 
 An example of how to support custom elements in [bpmn-js](https://github.com/bpmn-io/bpmn-js) while ensuring BPMN 2.0 compatibility.
 
-![Screencast](./resources/screencast.gif)
+:notebook: This example combines the following examples:
 
-:notebook: We refer to _custom elements_ as elements with their own representation and data.
+1. [bpmn-js-example-model-extension](https://github.com/bpmn-io/bpmn-js-example-model-extension)
+2. [bpmn-js-example-custom-rendering](https://github.com/bpmn-io/bpmn-js-example-custom-rendering)
+3. [bpmn-js-example-custom-editor-controls](https://github.com/bpmn-io/bpmn-js-example-custom-editor-controls)
+
+![Screenshot](docs/screenshot.png)
+
+:notebook: We refer to _custom elements_ as elements with  extension attributes and elements that are rendered differently.
 
 
 ## About
 
 This example covers the following topics:
 
-* [Creating a BPMN model extension](#extending-the-bpmn-model)
-* [Rendering a custom element](#rendering-the-element)
-* [Extending the BPMN editor](#creating-editor-controls)
+* [Creating a model extension](#creating-a-model-extension)
+* [Creating custom rendering](#creating-custom-rendering)
+* [Creating custom controls](#creating-custom-editor-controls)
 
 
-## Extending the BPMN Model
+## Creating a Model Extension
 
-The custom element is actually a BPMN task with a custom attribute. The custom attribute is defined as a [moddle extension](https://github.com/bpmn-io/moddle) in [`resources/emoji.json`](./resources/emoji.json):
+This example allows you to read, modify and write BPMN 2.0 diagrams that contain `qa:suitable` extension attributes and `qa:analysisDetails` extension elements. You can set the suitability score of each element.
 
-```javascript
-{
-  "name": "EmojiTask",
-  "extends": [ "bpmn:Task" ],
-  "properties": [
-    {
-      "name": "emoji",
-      "isAttr": true,
-      "type": "String"
-    }
-  ]
-}
-```
-
-The XML of the custom element looks like this:
+The XML of such an element looks something like this:
 
 ```xml
-<bpmn:task id="Task_1" emojis:emoji="🤗" />
+<bpmn2:task id="Task_1" name="Examine Situation" qa:suitable="0.7">
+  <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+  <bpmn2:extensionElements>
+    <qa:analysisDetails lastChecked="2015-01-20" nextCheck="2015-07-15">
+      <qa:comment author="Klaus">
+        Our operators always have a hard time to figure out, what they need to do here.
+      </qa:comment>
+      <qa:comment author="Walter">
+        I believe this can be split up in a number of activities and partly automated.
+      </qa:comment>
+    </qa:analysisDetails>
+  </bpmn2:extensionElements>
+</bpmn2:task>
 ```
 
-Still valid BPMN 2.0.
+For more information on creating model extensions head over to this example: https://github.com/bpmn-io/bpmn-js-example-model-extension
 
-We could store more complex data inside the `<bpmn:extensionElements />` tag. To do this, we would define the emoji as an extension element:
+## Creating Custom Rendering
+
+In this example we'll create a custom renderer that renders flow elements and their suitability score:
 
 ```javascript
-{
-  "name": "Emoji",
-  "superClass": [ "Element" ],
-  "properties": [
-    {
-      "name": "emoji",
-      "isBody": true,
-      "type": "String"
-    }
-  ]
-}
-```
+drawShape(parentNode, element) {
+  const shape = this.bpmnRenderer.drawShape(parentNode, element);
 
-The XML would look like this:
+  const suitabilityScore = this.getSuitabilityScore(element);
 
-```xml
-<bpmn:task id="Task_1">
-  <bpmn:extensionElements>
-    <emojis:emoji>🤗</emojis:emoji>
-  </bpmn:extensionElements>
-</bpmn:task>
-```
+  if (!isNil(suitabilityScore)) {
+    const color = this.getColor(suitabilityScore);
 
+    const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
 
-## Rendering the Element
+    svgAttr(rect, {
+      transform: 'translate(-20, -10)'
+    });
 
-In order to render the custom element an [additional renderer](./app/emoji/EmojiRenderer.js) is used. It knows which elements to render:
+    var text = svgCreate('text'); 
 
-```javascript
-EmojiRenderer.prototype.canRender = function(element) {
-  if (!is(element, 'bpmn:Task')) {
-    return;
+    svgAttr(text, {
+      fill: '#fff',
+      transform: 'translate(-15, 5)'
+    });
+
+    svgClasses(text).add('djs-label'); 
+  
+    svgAppend(text, document.createTextNode(suitabilityScore)); 
+  
+    svgAppend(parentNode, text);
   }
 
-  var businessObject = getBusinessObject(element);
-
-  return businessObject.emoji;
-};
+  return shape;
+}
 ```
 
-It also knows how to render them:
+For more information on creating custom rendering head over to this example: https://github.com/bpmn-io/bpmn-js-example-custom-rendering
 
-```javascript
-EmojiRenderer.prototype.drawShape = function(parentNode, element) {
-  var businessObject = element.businessObject,
-      emoji = businessObject.emoji;
+## Creating Custom Editor Controls
 
-  var width = element.width,
-      height = element.height;
-
-  var rect = drawRect(parentNode, width, height, TASK_BORDER_RADIUS);
-
-  svgAppend(parentNode, rect);
-
-  var text = svgCreate('text');
-
-  svgAttr(text, {
-    x: 10,
-    y: 25
-  });
-
-  svgClasses(text).add('djs-label');
-
-  svgAppend(text, document.createTextNode(emoji));
-
-  svgAppend(parentNode, text);
-
-  return rect;
-};
-```
-
-
-## Creating Editor Controls
-
-The custom element can be created like any other element, either via the palette or via the context pad. We override both to add a custom create control.
+In this example we'll adds controls that allow you to create `bpmn:ServiceTask` elements through the palette and the context pad.
 
 #### Palette
 
-The [palette](./app/emoji/EmojiPaletteProvider.js) contains an additional entry for creating the custom element:
+First, let's add the ability to create elements with different suitability scores through the palette:
 
 ```javascript
-  ...,
-
-  'create.emojiTask': {
-    group: 'activity',
-    className: 'icon-emoji',
-    title: translate('Create Emoji Task'),
-    action: {
-      dragstart: createEmojiTask,
-      click: createEmojiTask
-    }
-  },
-
-  ...
+'create.low-task': {
+  group: 'activity',
+  className: 'bpmn-icon-task red',
+  title: translate('Create Task with low suitability score'),
+  action: {
+    dragstart: createTask(SUITABILITY_SCORE_LOW),
+    click: createTask(SUITABILITY_SCORE_LOW)
+  }
+},
+'create.average-task': {
+  group: 'activity',
+  className: 'bpmn-icon-task yellow',
+  title: translate('Create Task with average suitability score'),
+  action: {
+    dragstart: createTask(SUITABILITY_SCORE_AVERGE),
+    click: createTask(SUITABILITY_SCORE_AVERGE)
+  }
+},
+'create.high-task': {
+  group: 'activity',
+  className: 'bpmn-icon-task green',
+  title: translate('Create Task with high suitability score'),
+  action: {
+    dragstart: createTask(SUITABILITY_SCORE_HIGH),
+    click: createTask(SUITABILITY_SCORE_HIGH)
+  }
+}
 ```
+
+See the entire palette [here](app/custom/CustomPalette.js).
 
 #### Context Pad
 
 The [context pad](./app/emoji/EmojiContextPadProvider.js) contains an additional entry, too:
 
 ```javascript
-{
-  ...
-
-  'append.append-emoji-task': {
-    group: 'model',
-    className: 'icon-emoji',
-    title: translate('Append Emoji Task'),
-    action: {
-      dragstart: appendEmojiTaskStart,
-      click: appendEmojiTask
-    }
-  },
-
-  ...
+'append.append-emoji-task': {
+  group: 'model',
+  className: 'icon-emoji',
+  title: translate('Append Emoji Task'),
+  action: {
+    dragstart: appendEmojiTaskStart,
+    click: appendEmojiTask
+  }
+},
 ```
 
+See the entire context pad [here](app/custom/CustomContextPad.js).
+
+For more information on creating custom editor controls head over to this example: https://github.com/bpmn-io/bpmn-js-example-custom-editor-controls
 
 ## Run the Example
 

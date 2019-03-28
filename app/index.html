@@ -1,96 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>bpmn-js custom element example</title>
+  <title>bpmn-js-example-model-extension</title>
 
   <link rel="stylesheet" href="vendor/bpmn-js/assets/diagram-js.css" />
   <link rel="stylesheet" href="vendor/bpmn-js/assets/bpmn-font/css/bpmn-embedded.css" />
-
-  <style>
-    html, body, #canvas {
-      height: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    .djs-palette .entry:before {
-      line-height: 46px;
-    }
-
-    #emojis {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 10px;
-      background-color: #FAFAFA;
-      border: solid 1px #ccc;
-      border-radius: 2px;
-    }
-
-    #emojis.hidden {
-      display: none;
-    }
-
-    #emojis p {
-      margin: 0 0 10px 0;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-    }
-
-    #emojis button {
-      width: 48px;
-      height: 32px;
-      line-height: 24px;
-      background: transparent;
-      border: solid 1px transparent;
-      border-radius: 2px;
-    }
-
-    #emojis button:hover {
-      border-color: #ccc;
-      cursor: pointer;
-    }
-
-    .icon-emoji:before {
-      content: '🤗';
-      font-size: 24px;
-    }
-
-    .djs-context-pad .icon-emoji:before {
-      font-size: 18px;
-    }
-
-    #hint {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      padding: 10px;
-      background-color: #FAFAFA;
-      border: solid 1px #ccc;
-      border-radius: 2px;
-      font-family: 'Arial', sans-serif;
-    }
-  </style>
-
+  <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
-  <div id="canvas"></div>
+  <div id="container"></div>
 
-  <div id="emojis" class="hidden">
-    <p>Select Emoji</p>
-    <div>
-      <button>🤗</button>
-      <button>😇</button>
-      <button>💩</button>
-      <button>💪</button>
-      <button>👀</button>
-    </div>
+  <div id="quality-assurance" class="panel hidden">
+    <form id="form">
+      <p>
+        <b>Suitability Score</b>
+      </p>
+      <br />
+      <input id="suitability-score" type="text" placeholder="100" autocomplete="off">
+      <br />
+      <br />
+      <p id="warning" class="hidden">
+        Suitability Score must be a number
+      </p>
+      <br />
+      <p>
+        <b>Last Checked</b>
+      </p>
+      <br />
+      <p id="last-checked">
+        -
+      </p>
+      <br />
+      <input id="okay" type="submit" value="Okay">
+    </form>
   </div>
 
-  <div id="hint">
-    Click <b>right mouse button</b> to change Emoji.
-  </div>
+  <div id="hint" class="panel">Click <b>right mouse button</b> to edit properties.</div>
 
   <script src="app.js"></script>
 </html>

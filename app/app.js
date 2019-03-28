@@ -1,83 +1,147 @@
-import Modeler from 'bpmn-js/lib/Modeler';
-
-import sampleProcess from '../resources/sample.bpmn';
-
-import emojiPackage from '../resources/emoji.json';
-
-import {
-  EmojiContextPadProvider,
-  EmojiPaletteProvider,
-  EmojiRenderer
-} from './emoji';
-
+import BpmnModeler from 'bpmn-js/lib/Modeler';
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
 
-var HIGH_PRIORITY = 100000;
+import diagramXML from '../resources/diagram.bpmn';
 
-var modeler = new Modeler({
-  container: '#canvas',
-  additionalModules: [
-    {
-      __init__: [ 'contextPadProvider', 'emojiRenderer', 'paletteProvider' ],
-      contextPadProvider: [ 'type', EmojiContextPadProvider ],
-      emojiRenderer: [ 'type', EmojiRenderer ],
-      paletteProvider: [ 'type', EmojiPaletteProvider ]
-    }
-  ],
-  moddleExtensions: {
-    emoji: emojiPackage
-  }
-});
+import customModule from './custom';
 
-modeler.importXML(sampleProcess);
+import qaExtension from '../resources/qa';
 
-window.modeler = modeler;
+const HIGH_PRIORITY = 1500;
 
-var modeling = modeler.get('modeling');
+const containerEl = document.getElementById('container'),
+      qualityAssuranceEl = document.getElementById('quality-assurance'),
+      suitabilityScoreEl = document.getElementById('suitability-score'),
+      lastCheckedEl = document.getElementById('last-checked'),
+      okayEl = document.getElementById('okay'),
+      formEl = document.getElementById('form'),
+      warningEl = document.getElementById('warning');
 
-var emojis = document.getElementById('emojis');
+// hide quality assurance if user clicks outside
+window.addEventListener('click', (event) => {
+  const { target } = event;
 
-var element;
-
-modeler.on('element.contextmenu', HIGH_PRIORITY, function(event) {
-  element = event.element;
-
-  var businessObject = getBusinessObject(element);
-
-  if (!businessObject.emoji) {
+  if (target === qualityAssuranceEl || qualityAssuranceEl.contains(target)) {
     return;
   }
 
-  event.originalEvent.preventDefault();
-  event.originalEvent.stopPropagation();
-
-  emojis.classList.remove('hidden');
-
-  return true;
+  qualityAssuranceEl.classList.add('hidden');
 });
 
-window.addEventListener('click', function(event) {
-  var target = event.target;
-
-  if (target !== emojis && !emojis.contains(target)) {
-    emojis.classList.add('hidden');
+// create modeler
+const bpmnModeler = new BpmnModeler({
+  container: containerEl,
+  additionalModules: [
+    customModule
+  ],
+  moddleExtensions: {
+    qa: qaExtension
   }
 });
 
-var buttons = Array.prototype.slice.call(emojis.querySelectorAll('button'));
+// import XML
+bpmnModeler.importXML(diagramXML, (err) => {
+  if (err) {
+    console.error(err);
+  }
 
-buttons.forEach(function(button) {
-  var emoji = button.textContent;
+  const moddle = bpmnModeler.get('moddle'),
+        modeling = bpmnModeler.get('modeling');
 
-  button.addEventListener('click', function() {
-    if (!element) {
+  let analysisDetails,
+      businessObject,
+      element,
+      suitabilityScore;
+
+  // validate suitability score
+  function validate() {
+    const { value } = suitabilityScoreEl;
+
+    if (isNaN(value)) {
+      warningEl.classList.remove('hidden');
+      okayEl.disabled = true;
+    } else {
+      warningEl.classList.add('hidden');
+      okayEl.disabled = false;
+    }
+  }
+
+  // open quality assurance if user right clicks on element
+  bpmnModeler.on('element.contextmenu', HIGH_PRIORITY, (event) => {
+    event.originalEvent.preventDefault();
+    event.originalEvent.stopPropagation();
+
+    qualityAssuranceEl.classList.remove('hidden');
+
+    ({ element } = event);
+  
+    // ignore root element
+    if (!element.parent) {
       return;
     }
 
+    businessObject = getBusinessObject(element);
+  
+    let { suitable } = businessObject;
+    
+    suitabilityScoreEl.value = suitable ? suitable : '';
+
+    suitabilityScoreEl.focus();
+
+    analysisDetails = getExtensionElement(businessObject, 'qa:AnalysisDetails');
+
+    lastCheckedEl.textContent = analysisDetails ? analysisDetails.lastChecked : '-';
+
+    validate();
+  });
+
+  // set suitability core and last checked if user submits
+  formEl.addEventListener('submit', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    suitabilityScore = Number(suitabilityScoreEl.value);
+
+    if (isNaN(suitabilityScore)) {
+      return;
+    }
+
+    const extensionElements = businessObject.extensionElements || moddle.create('bpmn:ExtensionElements');
+
+    if (!analysisDetails) {
+      analysisDetails = moddle.create('qa:AnalysisDetails');
+
+      extensionElements.get('values').push(analysisDetails);
+    }
+
+    analysisDetails.lastChecked = new Date().toISOString();
+
     modeling.updateProperties(element, {
-      emoji: emoji
+      extensionElements,
+      suitable: suitabilityScore
     });
 
-    emojis.classList.add('hidden');
+    qualityAssuranceEl.classList.add('hidden');
   });
+
+  // close quality assurance if user presses escape
+  formEl.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      qualityAssuranceEl.classList.add('hidden');
+    }
+  });
+
+  // validate suitability score if user inputs value
+  suitabilityScoreEl.addEventListener('input', validate);
+
 });
+
+function getExtensionElement(element, type) {
+  if (!element.extensionElements) {
+    return;
+  }
+
+  return element.extensionElements.values.filter((extensionElement) => {
+    return extensionElement.$instanceOf(type);
+  })[0];
+}

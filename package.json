@@ -1,7 +1,7 @@
 {
-  "name": "bpmn-js-custom-elements-example",
+  "name": "bpmn-js-example-model-extension",
   "version": "0.0.0",
-  "description": "The example to end all examples",
+  "description": "An example of creating a model extension for bpmn-js",
   "scripts": {
     "all": "run-s lint build",
     "build": "webpack --mode production",
@@ -9,13 +9,16 @@
     "lint": "eslint .",
     "start": "run-s dev"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpmn-io/bpmn-js-example-model-extension"
+  },
   "keywords": [
-    "bpmn-js",
-    "bpmn-js-example"
+    "bpmnjs-example"
   ],
   "author": {
-    "name": "Philipp Fromme",
-    "url": "https://github.com/philippfromme"
+    "name": "Nico Rehwaldt",
+    "url": "https://github.com/nikku"
   },
   "contributors": [
     {
@@ -35,10 +38,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "bpmn-js": "^3.0.4",
-    "diagram-js": "^3.0.1",
-    "inherits": "^2.0.3",
-    "min-dash": "^3.3.0",
-    "tiny-svg": "^2.2.0"
+    "bpmn-js": "^3.2.2",
+    "min-dash": "^3.4.0"
   }
 }
