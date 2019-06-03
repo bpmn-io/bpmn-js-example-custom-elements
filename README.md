@@ -16,7 +16,7 @@ By doing so, it combines all prior examples published in our [:notebook: custom 
 
 * Model and read data custom elements via a [model extension](https://github.com/bpmn-io/bpmn-js-example-model-extension)
 * Render custom elements with a [custom shape](https://github.com/bpmn-io/bpmn-js-example-custom-rendering)
-* Add [editor controls](https://github.com/bpmn-io/bpmn-js-example-custom-editor-controls) that allow custom elements to be created
+* Add [editor controls](https://github.com/bpmn-io/bpmn-js-example-custom-controls) that allow custom elements to be created
 
 Read about the details in the following sections:
 
@@ -148,7 +148,7 @@ The [context pad](./app/emoji/EmojiContextPadProvider.js) contains an additional
 
 See the entire context pad [here](app/custom/CustomContextPad.js).
 
-For more information on creating custom editor controls head over to the [custom contols example](https://github.com/bpmn-io/bpmn-js-example-custom-editor-controls).
+For more information on creating custom editor controls head over to the [custom contols example](https://github.com/bpmn-io/bpmn-js-example-custom-controls).
 
 
 ## Run the Example
