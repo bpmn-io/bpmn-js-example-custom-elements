@@ -32,7 +32,7 @@ Using a model extension we can read, modify and write BPMN 2.0 diagrams that con
 The XML of such an element looks something like this:
 
 ```xml
-<bpmn2:task id="Task_1" name="Examine Situation" qa:suitable="0.7">
+<bpmn2:task id="Task_1" name="Examine Situation" qa:suitable="70">
   <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
   <bpmn2:extensionElements>
     <qa:analysisDetails lastChecked="2015-01-20" nextCheck="2015-07-15">
