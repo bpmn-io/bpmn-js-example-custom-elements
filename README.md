@@ -148,7 +148,7 @@ The [context pad](./app/emoji/EmojiContextPadProvider.js) contains an additional
 
 See the entire context pad [here](app/custom/CustomContextPad.js).
 
-For more information on creating custom editor controls head over to the [custom contols example](https://github.com/bpmn-io/bpmn-js-example-custom-controls).
+For more information on creating custom editor controls head over to the [custom controls example](https://github.com/bpmn-io/bpmn-js-example-custom-controls).
 
 
 ## Run the Example
