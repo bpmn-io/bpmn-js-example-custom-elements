@@ -47,22 +47,22 @@ export default class CustomRenderer extends BaseRenderer {
       const color = this.getColor(suitabilityScore);
 
       const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
-  
+
       svgAttr(rect, {
         transform: 'translate(-20, -10)'
       });
 
-      var text = svgCreate('text'); 
+      var text = svgCreate('text');
 
       svgAttr(text, {
         fill: '#fff',
         transform: 'translate(-15, 5)'
       });
 
-      svgClasses(text).add('djs-label'); 
-    
-      svgAppend(text, document.createTextNode(suitabilityScore)); 
-    
+      svgClasses(text).add('djs-label');
+
+      svgAppend(text, document.createTextNode(suitabilityScore));
+
       svgAppend(parentNode, text);
     }
 
@@ -79,7 +79,7 @@ export default class CustomRenderer extends BaseRenderer {
 
   getSuitabilityScore(element) {
     const businessObject = getBusinessObject(element);
-  
+
     const { suitable } = businessObject;
 
     return Number.isFinite(suitable) ? suitable : null;

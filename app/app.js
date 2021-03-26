@@ -1,4 +1,5 @@
 import BpmnModeler from 'bpmn-js/lib/Modeler';
+
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
 
 import diagramXML from '../resources/diagram.bpmn';
@@ -74,16 +75,16 @@ bpmnModeler.importXML(diagramXML, (err) => {
     qualityAssuranceEl.classList.remove('hidden');
 
     ({ element } = event);
-  
+
     // ignore root element
     if (!element.parent) {
       return;
     }
 
     businessObject = getBusinessObject(element);
-  
+
     let { suitable } = businessObject;
-    
+
     suitabilityScoreEl.value = suitable ? suitable : '';
 
     suitabilityScoreEl.focus();
@@ -134,6 +135,8 @@ bpmnModeler.importXML(diagramXML, (err) => {
   // validate suitability score if user inputs value
   suitabilityScoreEl.addEventListener('input', validate);
 
+}).catch((err) => {
+  console.error(err);
 });
 
 function getExtensionElement(element, type) {
