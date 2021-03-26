@@ -29,19 +29,19 @@ export default class CustomContextPad {
       return function(event, element) {
         if (autoPlace) {
           const businessObject = bpmnFactory.create('bpmn:Task');
-    
+
           businessObject.suitable = suitabilityScore;
-    
+
           const shape = elementFactory.createShape({
             type: 'bpmn:Task',
             businessObject: businessObject
           });
-    
+
           autoPlace.append(element, shape);
         } else {
           appendServiceTaskStart(event, element);
         }
-      }
+      };
     }
 
     function appendServiceTaskStart(suitabilityScore) {
@@ -56,7 +56,7 @@ export default class CustomContextPad {
         });
 
         create.start(event, shape, element);
-      }
+      };
     }
 
     return {

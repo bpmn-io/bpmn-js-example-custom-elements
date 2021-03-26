@@ -23,16 +23,16 @@ export default class CustomPalette {
     function createTask(suitabilityScore) {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:Task');
-  
+
         businessObject.suitable = suitabilityScore;
-  
+
         const shape = elementFactory.createShape({
           type: 'bpmn:Task',
           businessObject: businessObject
         });
-  
-        create.start(event, shape); 
-      }
+
+        create.start(event, shape);
+      };
     }
 
     return {
@@ -63,7 +63,7 @@ export default class CustomPalette {
           click: createTask(SUITABILITY_SCORE_HIGH)
         }
       }
-    }
+    };
   }
 }
 
