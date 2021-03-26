@@ -3,6 +3,8 @@
 
 # Custom Elements in bpmn-js
 
+[![CI](https://github.com/bpmn-io/bpmn-js-example-custom-elements/workflows/CI/badge.svg)](https://github.com/bpmn-io/bpmn-js-example-custom-elements/actions?query=workflow%3ACI)
+
 An example of how to support custom elements in [bpmn-js](https://github.com/bpmn-io/bpmn-js) while ensuring BPMN 2.0 compatibility.
 
 ![Screenshot](docs/screenshot.png)
