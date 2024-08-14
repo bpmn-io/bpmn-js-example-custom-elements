@@ -1,5 +1,5 @@
 const SUITABILITY_SCORE_HIGH = 100,
-      SUITABILITY_SCORE_AVERGE = 50,
+      SUITABILITY_SCORE_AVERAGE = 50,
       SUITABILITY_SCORE_LOW = 25;
 
 export default class CustomPalette {
@@ -50,8 +50,8 @@ export default class CustomPalette {
         className: 'bpmn-icon-task yellow',
         title: translate('Create Task with average suitability score'),
         action: {
-          dragstart: createTask(SUITABILITY_SCORE_AVERGE),
-          click: createTask(SUITABILITY_SCORE_AVERGE)
+          dragstart: createTask(SUITABILITY_SCORE_AVERAGE),
+          click: createTask(SUITABILITY_SCORE_AVERAGE)
         }
       },
       'create.high-task': {

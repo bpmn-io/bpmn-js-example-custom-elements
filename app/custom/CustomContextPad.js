@@ -1,5 +1,5 @@
 const SUITABILITY_SCORE_HIGH = 100,
-      SUITABILITY_SCORE_AVERGE = 50,
+      SUITABILITY_SCORE_AVERAGE = 50,
       SUITABILITY_SCORE_LOW = 25;
 
 export default class CustomContextPad {
@@ -74,8 +74,8 @@ export default class CustomContextPad {
         className: 'bpmn-icon-task yellow',
         title: translate('Append Task with average suitability score'),
         action: {
-          click: appendServiceTask(SUITABILITY_SCORE_AVERGE),
-          dragstart: appendServiceTaskStart(SUITABILITY_SCORE_AVERGE)
+          click: appendServiceTask(SUITABILITY_SCORE_AVERAGE),
+          dragstart: appendServiceTaskStart(SUITABILITY_SCORE_AVERAGE)
         }
       },
       'append.high-task': {
