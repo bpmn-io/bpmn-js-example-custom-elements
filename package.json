@@ -29,6 +29,9 @@
     }
   ],
   "license": "MIT",
+  "engines": {
+    "node": "^24.15.0"
+  },
   "devDependencies": {
     "copy-webpack-plugin": "^14.0.0",
     "eslint": "^9.39.5",
