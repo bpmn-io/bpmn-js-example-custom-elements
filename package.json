@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "description": "An example of how to support custom elements in bpmn-js while ensuring BPMN 2.0 compatibility.",
   "scripts": {
-    "all": "run-s lint build",
+    "all": "npm-run-all2 --sequential lint build",
     "build": "webpack --mode production",
     "build:watch": "webpack --watch",
-    "dev": "run-p build:watch serve",
+    "dev": "npm-run-all2 --parallel build:watch serve",
     "serve": "sirv public --dev",
     "lint": "eslint .",
-    "start": "run-s build serve"
+    "start": "npm-run-all2 --sequential build serve"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "copy-webpack-plugin": "^14.0.0",
     "eslint": "^9.39.5",
     "eslint-plugin-bpmn-io": "^2.3.1",
-    "npm-run-all": "^4.1.5",
+    "npm-run-all2": "^9.0.3",
     "sirv-cli": "^1.0.11",
     "webpack": "^5.109.2",
     "webpack-cli": "^7.2.2"
